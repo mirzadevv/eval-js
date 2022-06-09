@@ -16,6 +16,33 @@ const myEval = (expression) => {
       number = "";
     }
   }
+
+  // calculation of the second priority (+ , -)
+  var secArrayExpression = [...arrayExpression];
+  var secondPriorityResult = 0;
+  for (i = 0; i < secArrayExpression.length; i++) {
+    let secondPriority = secArrayExpression.find(
+      (item) => item === "-" || item === "+"
+    );
+    let indexOfSecondPriority = secArrayExpression.indexOf(secondPriority);
+    if (secondPriority === "-") {
+      secondPriorityResult =
+        secArrayExpression[indexOfSecondPriority - 1] -
+        secArrayExpression[indexOfSecondPriority + 1];
+    } else if (secondPriority === "+") {
+      secondPriorityResult =
+        secArrayExpression[indexOfSecondPriority - 1] +
+        secArrayExpression[indexOfSecondPriority + 1];
+    } else {
+      break;
+    }
+    secArrayExpression.splice(
+      indexOfSecondPriority - 1,
+      3,
+      secondPriorityResult
+    );
+  }
+  return secArrayExpression[0];
 };
 
 let expression = "8*2+4/1";
